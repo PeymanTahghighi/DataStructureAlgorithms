@@ -13,6 +13,7 @@ set (EXECUTABLE_OUTPUT_PATH $(PROJECT_BINARY_DIR)/bin)
 
 #----------------------------------------------------------------------------
 include_directories("include" "dep/include")
+link_directories("dep/lib/SDL")
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -35,5 +36,9 @@ add_executable("Tree"
 	${TREE_HEADERS}
 	${TREE_SOURCES}
 )
+
+target_link_libraries("Tree" "SDL2")
+target_link_libraries("Tree" "SDL2main")
+
 #----------------------------------------------------------------------------
 

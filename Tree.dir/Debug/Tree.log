@@ -1,0 +1,15 @@
+﻿Tree.obj : error LNK2019: unresolved external symbol _SDL_RenderDrawPoint referenced in function "protected: void __thiscall Tree::drawCircle(struct SDL_Renderer *,int,int,int)" (?drawCircle@Tree@@IAEXPAUSDL_Renderer@@HHH@Z)
+Tree.obj : error LNK2019: unresolved external symbol _SDL_RenderDrawLine referenced in function "public: void __thiscall Tree::draw(struct SDL_Renderer *)" (?draw@Tree@@QAEXPAUSDL_Renderer@@@Z)
+Main.obj : error LNK2019: unresolved external symbol _SDL_GetError referenced in function "bool __cdecl init(void)" (?init@@YA_NXZ)
+Main.obj : error LNK2019: unresolved external symbol _SDL_CreateWindow referenced in function "bool __cdecl init(void)" (?init@@YA_NXZ)
+Main.obj : error LNK2019: unresolved external symbol _SDL_DestroyWindow referenced in function "void __cdecl destroy(void)" (?destroy@@YAXXZ)
+Main.obj : error LNK2019: unresolved external symbol _SDL_PollEvent referenced in function _SDL_main
+Main.obj : error LNK2019: unresolved external symbol _SDL_CreateRenderer referenced in function "bool __cdecl init(void)" (?init@@YA_NXZ)
+Main.obj : error LNK2019: unresolved external symbol _SDL_SetRenderDrawColor referenced in function _SDL_main
+Main.obj : error LNK2019: unresolved external symbol _SDL_RenderClear referenced in function _SDL_main
+Main.obj : error LNK2019: unresolved external symbol _SDL_RenderPresent referenced in function _SDL_main
+Main.obj : error LNK2019: unresolved external symbol _SDL_DestroyRenderer referenced in function "void __cdecl destroy(void)" (?destroy@@YAXXZ)
+Main.obj : error LNK2019: unresolved external symbol _SDL_Init referenced in function "bool __cdecl init(void)" (?init@@YA_NXZ)
+Main.obj : error LNK2019: unresolved external symbol _SDL_Quit referenced in function "void __cdecl destroy(void)" (?destroy@@YAXXZ)
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol _main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+E:\Game box\Projects\DataStructureAlgorithms\build\\bin\Debug\Tree.exe : fatal error LNK1120: 14 unresolved externals
