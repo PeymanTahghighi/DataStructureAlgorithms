@@ -7,12 +7,12 @@
 //--------------------------------------------------------------------------
 //==========================================================================
 
-
 //--------------------------------------------------------------------------
 Tree::Tree(float _rootData)
 {
-	m_array = new float[1];
-	m_array[0] = _rootData;
+	m_nodeArray = new Node[1];
+	Node node(_rootData, 0);
+	m_nodeArray[0] = node;
 	m_size = 1;
 	m_items = 1;
 }
@@ -21,7 +21,7 @@ Tree::Tree(float _rootData)
 //--------------------------------------------------------------------------
 Tree::~Tree()
 {
-	delete[] m_array;
+	delete[] m_nodeArray;
 }
 //--------------------------------------------------------------------------
 
@@ -37,7 +37,8 @@ void Tree::add(float _data)
 //--------------------------------------------------------------------------
 void Tree::addToEmptyPlace(float _data)
 {
-	m_array[m_items] = _data;
+	Node node(_data, m_items);
+	m_nodeArray[m_items] = node;
 }
 //--------------------------------------------------------------------------
 
@@ -69,6 +70,8 @@ void Tree::draw(SDL_Renderer *renderer)
 
 	for (int i = 0; i < m_items; ++i)
 	{
+		if (m_nodeArray[i].isNull)
+			continue;
 
 		int j = i + 1;
 		int height = floorf(log2(j));
@@ -117,14 +120,14 @@ void Tree::checkSize()
 {
 	if (m_size == m_items)
 	{
-		float * tmp = new float[m_size * 2];
+		Node * tmp = new Node[m_size * 2];
 		for (int i = 0; i < m_size; ++i)
 		{
-			tmp[i] = m_array[i];
+			tmp[i] = m_nodeArray[i];
 		}
 
-		delete[] m_array;
-		m_array = tmp;
+		delete[] m_nodeArray;
+		m_nodeArray = tmp;
 		m_size *= 2;
 	}
 }
@@ -160,10 +163,10 @@ void Tree::drawCircle(SDL_Renderer * renderer, int centerX, int centerY, int rad
 void Tree::traverseInOrder(int index)
 {
 	if (isLeftChildExist(index))
-		traverseInOrder(getLeftChild(index));
-	std::cout << m_array[index] << "\n";
+		traverseInOrder(m_nodeArray[index].leftChild);
+	std::cout << m_nodeArray[index].data << "\n";
 	if (isRightChildExist(index))
-		traverseInOrder(getRightChild(index));
+		traverseInOrder(m_nodeArray[index].rightChild);
 }
 //--------------------------------------------------------------------------
 
@@ -171,51 +174,58 @@ void Tree::traverseInOrder(int index)
 void Tree::traversePostOrder(int index)
 {
 	if (isLeftChildExist(index))
-		traversePostOrder(getLeftChild(index));
+		traversePostOrder(m_nodeArray[index].leftChild);
 	if (isRightChildExist(index))
-		traversePostOrder(getRightChild(index));
-	std::cout << m_array[index] << "\n";
+		traversePostOrder(m_nodeArray[index].rightChild);
+	std::cout << m_nodeArray[index].data << "\n";
 }
 //--------------------------------------------------------------------------
 
+//--------------------------------------------------------------------------
 void Tree::traversePreOrder(int index)
 {
-	std::cout << m_array[index] << "\n";
+	std::cout << m_nodeArray[index].data << "\n";
 	if (isLeftChildExist(index))
-		traversePreOrder(getLeftChild(index));
+		traversePreOrder(m_nodeArray[index].leftChild);
 	if (isRightChildExist(index))
-		traversePreOrder(getRightChild(index));
+		traversePreOrder(m_nodeArray[index].rightChild);
+}
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+Node& Tree::getLeftChild(int index)
+{
+	return m_nodeArray[m_nodeArray[index].leftChild];
+}
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+Node& Tree::getRightChild(int index)
+{
+	return m_nodeArray[m_nodeArray[index].rightChild];
 }
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
 bool Tree::isLeftChildExist(int index)
 {
-	if ((index * 2) + 1 >= m_items)
-		return false;
-	return true;
+	if (m_nodeArray[index].leftChild < m_items)
+	{
+		if (!m_nodeArray[m_nodeArray[index].leftChild].isNull)
+			return true;
+	}
+	return false;
 }
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
 bool Tree::isRightChildExist(int index)
 {
-	if ((index * 2) + 2 >= m_items)
-		return false;
-	return true;
-}
-//--------------------------------------------------------------------------
-
-//--------------------------------------------------------------------------
-int Tree::getLeftChild(int index)
-{
-	return index * 2 + 1;
-}
-//--------------------------------------------------------------------------
-
-//--------------------------------------------------------------------------
-int Tree::getRightChild(int index)
-{
-	return index * 2 + 2;
+	if (m_nodeArray[index].rightChild < m_items)
+	{
+		if (!m_nodeArray[m_nodeArray[index].rightChild].isNull)
+			return true;
+	}
+	return false;
 }
 //--------------------------------------------------------------------------

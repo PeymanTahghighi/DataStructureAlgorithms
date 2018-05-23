@@ -65,15 +65,16 @@ void destroy()
 //-------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------
-int main(int argc, char *argv[])
+int main(int /*argc*/, char */*argv*/[])
 {
-	Tree *tree = new Tree(10);
+	Tree *tree = new Tree(0);
 	for (int i = 0; i < 10; ++i)
 	{
-		tree->add(i);
+		tree->add(i + 1);
 	}
 
 	tree->traverseInOrder(0);
+	std::cout << "size : " << pow(2,sizeof(short)*8);
 	getchar();
 
 	if (!init())
@@ -81,6 +82,8 @@ int main(int argc, char *argv[])
 		std::cout << "Could not initialize SDL";
 		return 0;
 	}
+
+
 
 	//main loop
 	bool quit = false;
@@ -126,8 +129,10 @@ int main(int argc, char *argv[])
 	}
 	//-------------------------------------------------------------------------------
 
+	//cleanup
 	destroy();
 	delete tree;
 	return 0;
+	//-------------------
 }
 //-------------------------------------------------------------------------------

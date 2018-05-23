@@ -7,31 +7,31 @@
 
 
 
-////---------------------------------------------------------
-//struct Node
-//{
-//	//---------------------------------------------------------
-//	float data;
-//	Node * left, *right;
-//	int depth;
-//	//---------------------------------------------------------
-//
-//	//used for drawing and no more usage,
-//	//remove for basic tree implementation and not visualization.
-//	int centerX;
-//	int centerY;
-//	//---------------------------------------------------------
-//
-//	//---------------------------------------------------------
-//	Node(float _data) : data(_data), left(nullptr), right(nullptr), centerX(0.0f), centerY(0.0f), depth(0) { }
-//	//---------------------------------------------------------
-//
-//	//---------------------------------------------------------
-//	Node(float _data, Node * _left, Node * _right) : data(_data), right(_right), left(_left), centerX(0.0f), centerY(0.0f), depth(0) { }
-//	//---------------------------------------------------------
-//
-//};
-////---------------------------------------------------------
+//---------------------------------------------------------
+struct Node
+{
+	//---------------------------------------------------------
+	float data;
+	unsigned short index;
+	unsigned short rightChild;
+	unsigned short leftChild;
+	bool isNull;
+	//---------------------------------------------------------
+
+	//---------------------------------------------------------
+	Node() : data(0), rightChild(0), leftChild(0), isNull(true) {}
+	//---------------------------------------------------------
+
+	//---------------------------------------------------------
+	Node(float _data, unsigned short _index) : data(_data), index(_index), isNull(false)
+	{
+		rightChild = index * 2 + 2;
+		leftChild = index * 2 + 1;
+	}
+	//---------------------------------------------------------
+
+};
+//---------------------------------------------------------
 
 //---------------------------------------------------------
 class Tree
@@ -56,8 +56,8 @@ public:
 	bool isLeftChildExist(int index);
 	bool isRightChildExist(int index);
 
-	int getLeftChild(int index);
-	int getRightChild(int index);
+	Node& getLeftChild(int index);
+	Node& getRightChild(int index);
 
 	void draw(SDL_Renderer * renderer);
 	//---------------------------------------------------------
@@ -80,17 +80,16 @@ private:
 
 	//---------------------------------------------------------
 	void addToEmptyPlace(float data);
+	//---------------------------------------------------------
 
 private:
 
-	float * m_array;
+	Node * m_nodeArray;
 
 	//size of array
 	int m_size;
 
 	//current items
 	int m_items;
-
-	int m_height;
 };
 //---------------------------------------------------------
