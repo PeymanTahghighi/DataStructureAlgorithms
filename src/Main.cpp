@@ -76,13 +76,19 @@ void destroy()
 //-------------------------------------------------------------------------------
 int main(int /*argc*/, char * /*argv*/ [])
 {
+	//enable memory leak checks.
+#if defined(_DEBUG) | (DEBUG)
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+	//------------------------------------------
+
 	Tree *tree = new Tree(0);
 	for (int i = 0; i < 60; ++i)
 	{
 		tree->add((float)(i)+0.2f*i);
 	}
 
-	//tree->traverseInOrder(0);
+	tree->traverseInOrder(0);
 
 	if (!init())
 	{
@@ -138,6 +144,10 @@ int main(int /*argc*/, char * /*argv*/ [])
 	//cleanup
 	destroy();
 	delete tree;
+
+	//dump memory leaks
+	_CrtDumpMemoryLeaks();
+
 	return 0;
 	//-------------------
 }
