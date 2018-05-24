@@ -14,6 +14,7 @@ set (EXECUTABLE_OUTPUT_PATH $(PROJECT_BINARY_DIR)/bin)
 #----------------------------------------------------------------------------
 include_directories("include" "dep/include")
 link_directories("dep/lib/SDL")
+link_directories("dep/lib/SDL_TTF")
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -25,6 +26,7 @@ endif ()
 #----------------------------------------------------------------------------
 set(TREE_HEADERS
 	"include/Tree.h"
+	"include/Prerequisities.h"
 )
 
 set(TREE_SOURCES
@@ -39,6 +41,7 @@ add_executable("Tree"
 
 target_link_libraries("Tree" "SDL2")
 target_link_libraries("Tree" "SDL2main")
+target_link_libraries("Tree" "SDL2_ttf")
 
 #----------------------------------------------------------------------------
 

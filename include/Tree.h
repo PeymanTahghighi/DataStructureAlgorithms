@@ -2,6 +2,8 @@
 //=========================================================
 //---------------------------------------------------------
 #include<SDL\SDL.h>
+#include<SDL_TTF\SDL_ttf.h>
+#include"Prerequisities.h"
 //---------------------------------------------------------
 //=========================================================
 
@@ -37,7 +39,7 @@ struct Node
 class Tree
 {
 public:
-
+	
 	//Constructors
 	Tree(float _rootData);
 	//---------------------------------------------------------
@@ -59,13 +61,26 @@ public:
 	Node& getLeftChild(int index);
 	Node& getRightChild(int index);
 
-	void draw(SDL_Renderer * renderer);
-	//---------------------------------------------------------
+	int getHeight() const;
+
+	int getItemsCount() const { return m_items; }
+	//--------------------------------------------
+
+	//drawing functions.
+	void draw(SDL_Renderer * renderer, TTF_Font *font);
+	//-------------------------------------------------------------------------------
 
 protected:
 
-	//---------------------------------------------------------
+	//drawing functions.
 	void drawCircle(SDL_Renderer * renderer, int centerX, int centerY, int radius);
+	void renderText(
+		SDL_Renderer *renderer,
+		int x,
+		int y,
+		const char *text,
+		TTF_Font *font,
+		SDL_Color *color);
 	//---------------------------------------------------------
 
 	/*
@@ -87,9 +102,9 @@ private:
 	Node * m_nodeArray;
 
 	//size of array
-	int m_size;
+	unsigned short m_size;
 
 	//current items
-	int m_items;
+	unsigned short m_items;
 };
 //---------------------------------------------------------

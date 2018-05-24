@@ -1,9 +1,9 @@
 ﻿//==========================================================================
 //--------------------------------------------------------------------------
 #include "Tree.h"
-#include<queue>
 #include<iostream>
 #include<vector>
+#include<stdlib.h>
 //--------------------------------------------------------------------------
 //==========================================================================
 
@@ -43,30 +43,56 @@ void Tree::addToEmptyPlace(float _data)
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
-void Tree::draw(SDL_Renderer *renderer)
+void Tree::checkSize()
 {
-	int radius = 10;
-	int yOffset = 50;
+	if (m_size == m_items)
+	{
+		Node * tmp = new Node[m_size * 2];
+		for (int i = 0; i < m_size; ++i)
+		{
+			tmp[i] = m_nodeArray[i];
+		}
+
+		delete[] m_nodeArray;
+		m_nodeArray = tmp;
+		m_size *= 2;
+	}
+}
+//--------------------------------------------------------------------------
+
+//drawing functions
+//====================================================================================================
+//--------------------------------------------------------------------------
+void Tree::draw(SDL_Renderer *renderer, TTF_Font *font)
+{
+	int radius = 20;
+	int yOffset = 75;
 	int xOffset = 0;
-	int x = 800 / 2;
-	int xEnd = 800 / 2;
-	int xStart = 800 / 2;
+	int x = 1800 / 2;
+	int xEnd = x;
+	int xStart = x;
+	SDL_Color color;
+	color.r = 0;
+	color.g = 0;
+	color.b = 0;
+	color.a = 255;
 
 	//calculate x offset
 	//calculate offset that all nods in last
 	//level fit correctly.
-	int totalHeight = floorf(log2f(m_items));
-	int nodeInLastLevel = pow(2, totalHeight);
+	int totalHeight = (int)floorf(log2f(m_items));
+	int nodeInLastLevel = (int)pow(2, (int)totalHeight);
 	//start to end in last level.
 	int totalXInLastLevel = nodeInLastLevel * radius;
 
 	//we get xOffset from this equation->  totalXInLastLevel = (xEnd + xOffset*totalHeight) - (xStart - xOffset*totalHeight)
 	xOffset = (totalXInLastLevel - xEnd + xStart) / totalHeight;
-
 	//---------------------
 
 	//each node father x.
 	std::vector<int> allNodeX;
+
+	std::string numberString;
 
 	for (int i = 0; i < m_items; ++i)
 	{
@@ -74,14 +100,14 @@ void Tree::draw(SDL_Renderer *renderer)
 			continue;
 
 		int j = i + 1;
-		int height = floorf(log2(j));
+		int height = (int)floorf(log2f((float)j));
 		//we add and offset to each node.
-		int y = yOffset*height + 20;
+		int y = yOffset*height + radius;
 
 		int numInLevel = (j) % (int)pow(2, height);
 
 		//X offset per node.
-		int xPerNode = (xEnd - xStart) / (pow(2, height) - 1);
+		int xPerNode = (int)((xEnd - xStart) / (pow(2, height) - 1));
 
 		//calculate this node x positon using its index in level and offset.
 		x = numInLevel*xPerNode;
@@ -89,10 +115,14 @@ void Tree::draw(SDL_Renderer *renderer)
 
 		allNodeX.push_back(x);
 
+		//draw circle and data
+		floatToString(m_nodeArray[i].data, numberString);
 		drawCircle(renderer, x, y, radius);
+		renderText(renderer, x, y, numberString.c_str(), font, &color);
+		//---------------------------------------------------
 
 		//draw line to father if exits
-		int fatherIndex = floorf(j / 2);
+		int fatherIndex = (int)floorf((int)j / 2.0f);
 		if (fatherIndex != 0)
 		{
 			int fatherX = allNodeX.at(fatherIndex - 1);
@@ -112,24 +142,6 @@ void Tree::draw(SDL_Renderer *renderer)
 	}
 
 	allNodeX.clear();
-}
-//--------------------------------------------------------------------------
-
-//--------------------------------------------------------------------------
-void Tree::checkSize()
-{
-	if (m_size == m_items)
-	{
-		Node * tmp = new Node[m_size * 2];
-		for (int i = 0; i < m_size; ++i)
-		{
-			tmp[i] = m_nodeArray[i];
-		}
-
-		delete[] m_nodeArray;
-		m_nodeArray = tmp;
-		m_size *= 2;
-	}
 }
 //--------------------------------------------------------------------------
 
@@ -154,10 +166,36 @@ void Tree::drawCircle(SDL_Renderer * renderer, int centerX, int centerY, int rad
 		SDL_RenderDrawPoint(renderer, centerX - y, centerY - x);
 
 		x += step;
-		y = sqrt(radiusPow2 - x*x);
+		y = (int)sqrt(radiusPow2 - x*x);
 	}
 }
 //--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+void Tree::renderText(
+	SDL_Renderer *renderer,
+	int x,
+	int y,
+	const char *text,
+	TTF_Font *font,
+	SDL_Color *color)
+{
+	SDL_Rect rect;
+	SDL_Surface *surface;
+	SDL_Texture *texture;
+
+	surface = TTF_RenderText_Solid(font, text, *color);
+	texture = SDL_CreateTextureFromSurface(renderer, surface);
+	rect.x = x - surface->w/2;
+	rect.y = y - surface->h/2;
+	rect.w = surface->w;
+	rect.h = surface->h;
+	SDL_FreeSurface(surface);
+	SDL_RenderCopy(renderer, texture, NULL, &rect);
+	SDL_DestroyTexture(texture);
+}
+//--------------------------------------------------------------------------
+//====================================================================================================
 
 //--------------------------------------------------------------------------
 void Tree::traverseInOrder(int index)
@@ -227,5 +265,12 @@ bool Tree::isRightChildExist(int index)
 			return true;
 	}
 	return false;
+}
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+int Tree::getHeight() const
+{
+	return (int)floorf(log2f(m_items));
 }
 //--------------------------------------------------------------------------

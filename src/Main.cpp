@@ -1,6 +1,7 @@
 //===============================================================================
 //-------------------------------------------------------------------------------
 #include<SDL/SDL.h>
+#include<SDL_TTF\SDL_ttf.h>
 #include<iostream>
 #include<chrono>
 #include"Tree.h"
@@ -8,7 +9,7 @@
 //===============================================================================
 
 //-------------------------------------------------------------------------------
-#define SCREEN_WIDTH 800
+#define SCREEN_WIDTH 1800
 #define SCREEN_HEIGHT 600
 #define AVG_FRAME 50
 //-------------------------------------------------------------------------------
@@ -16,6 +17,7 @@
 //-------------------------------------------------------------------------------
 SDL_Window * gWindow = nullptr;
 SDL_Renderer * gRenderer = nullptr;
+TTF_Font* gFont = nullptr;
 unsigned int gFrameCounter;
 float gCumulativeDiff;
 //-------------------------------------------------------------------------------
@@ -51,6 +53,12 @@ bool init()
 	}
 	//-------------------------------------------------------------------------------
 
+	//Create font rendering system
+	TTF_Init();
+	gFont = TTF_OpenFont("tahoma.ttf", 9);
+	TTF_SetFontStyle(gFont, TTF_STYLE_BOLD);
+	//-------------------------------------------------------------------------------
+
 	return true;
 }
 //-------------------------------------------------------------------------------
@@ -60,30 +68,27 @@ void destroy()
 {
 	SDL_DestroyWindow(gWindow);
 	SDL_DestroyRenderer(gRenderer);
+	TTF_Quit();
 	SDL_Quit();
 }
 //-------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------
-int main(int /*argc*/, char */*argv*/[])
+int main(int /*argc*/, char * /*argv*/ [])
 {
 	Tree *tree = new Tree(0);
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 60; ++i)
 	{
-		tree->add(i + 1);
+		tree->add((float)(i)+0.2f*i);
 	}
 
-	tree->traverseInOrder(0);
-	std::cout << "size : " << pow(2,sizeof(short)*8);
-	getchar();
+	//tree->traverseInOrder(0);
 
 	if (!init())
 	{
 		std::cout << "Could not initialize SDL";
 		return 0;
 	}
-
-
 
 	//main loop
 	bool quit = false;
@@ -102,12 +107,13 @@ int main(int /*argc*/, char */*argv*/[])
 			}
 		}
 
-		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
 		SDL_RenderClear(gRenderer);
 
 		SDL_SetRenderDrawColor(gRenderer, 0xF0, 0x00, 0xFF, 0xFF);
-		tree->draw(gRenderer);
+		tree->draw(gRenderer, gFont);
 
+		
 		SDL_RenderPresent(gRenderer);
 		
 		//Calculate frame rate
