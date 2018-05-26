@@ -7,16 +7,15 @@
 //---------------------------------------------------------
 //=========================================================
 
-
-
 //---------------------------------------------------------
 struct Node
 {
 	//---------------------------------------------------------
 	float data;
-	unsigned short index;
-	unsigned short rightChild;
-	unsigned short leftChild;
+	uint16_t index;
+	uint16_t rightChild;
+	uint16_t leftChild;
+
 	bool isNull;
 	//---------------------------------------------------------
 
@@ -25,7 +24,7 @@ struct Node
 	//---------------------------------------------------------
 
 	//---------------------------------------------------------
-	Node(float _data, unsigned short _index) : data(_data), index(_index), isNull(false)
+	Node(float _data, uint16_t _index) : data(_data), index(_index), isNull(false)
 	{
 		rightChild = index * 2 + 2;
 		leftChild = index * 2 + 1;
@@ -42,6 +41,7 @@ public:
 	
 	//Constructors
 	Tree(float _rootData);
+	Tree();
 	//---------------------------------------------------------
 
 	//Destructors
@@ -61,9 +61,10 @@ public:
 	Node& getLeftChild(int index);
 	Node& getRightChild(int index);
 
-	int getHeight() const;
+	virtual int getHeight() const;
 
 	int getItemsCount() const { return m_items; }
+
 	//--------------------------------------------
 
 	//drawing functions.
@@ -91,20 +92,25 @@ protected:
 	void checkSize();
 	//---------------------------------------------------------
 
+	void grow();
+	//---------------------------------------------------------
+
 private:
 
 	//---------------------------------------------------------
 	void addToEmptyPlace(float data);
 	//---------------------------------------------------------
 
-private:
+protected:
 
 	Node * m_nodeArray;
 
 	//size of array
-	unsigned short m_size;
+	uint16_t m_size;
 
 	//current items
-	unsigned short m_items;
+	uint16_t m_items;
+
+	uint16_t m_height;
 };
 //---------------------------------------------------------

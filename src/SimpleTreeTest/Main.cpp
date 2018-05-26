@@ -4,7 +4,7 @@
 #include<SDL_TTF\SDL_ttf.h>
 #include<iostream>
 #include<chrono>
-#include"Tree.h"
+#include"Tree/Tree.h"
 //-------------------------------------------------------------------------------
 //===============================================================================
 
@@ -18,7 +18,7 @@
 SDL_Window * gWindow = nullptr;
 SDL_Renderer * gRenderer = nullptr;
 TTF_Font* gFont = nullptr;
-unsigned int gFrameCounter;
+uint32_t gFrameCounter;
 float gCumulativeDiff;
 //-------------------------------------------------------------------------------
 

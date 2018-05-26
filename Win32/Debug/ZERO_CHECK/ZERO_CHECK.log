@@ -1,2 +1,8 @@
 ﻿  Checking Build System
-  CMake does not need to re-run because E:/Game box/Projects/DataStructureAlgorithms/build1/CMakeFiles/generate.stamp is up-to-date.
+  CMake is re-running because E:/Game box/Projects/DataStructureAlgorithms/build1/CMakeFiles/generate.stamp is out-of-date.
+    the file 'E:/Game box/Projects/DataStructureAlgorithms/CMakeLists.txt'
+    is newer than 'E:/Game box/Projects/DataStructureAlgorithms/build1/CMakeFiles/generate.stamp.depend'
+    result='-1'
+  -- Configuring done
+  -- Generating done
+  -- Build files have been written to: E:/Game box/Projects/DataStructureAlgorithms/build1
