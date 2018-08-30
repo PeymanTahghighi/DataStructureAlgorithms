@@ -1,2 +1,8 @@
-﻿  Tree.cpp
+﻿  BST.cpp
+  Tree.cpp
+E:\Game box\Projects\DataStructureAlgorithms\src\Tree\Tree.cpp(84): warning C4100: 'font': unreferenced formal parameter
+E:\Game box\Projects\DataStructureAlgorithms\src\Tree\Tree.cpp(84): warning C4100: 'renderer': unreferenced formal parameter
+E:\Game box\Projects\DataStructureAlgorithms\src\Tree\Tree.cpp(87): warning C4189: 'startY': local variable is initialized but not referenced
+E:\Game box\Projects\DataStructureAlgorithms\src\Tree\Tree.cpp(86): warning C4189: 'startX': local variable is initialized but not referenced
+  Generating Code...
   Tree.vcxproj -> E:\Game box\Projects\DataStructureAlgorithms\build1\lib\Debug\Tree.lib

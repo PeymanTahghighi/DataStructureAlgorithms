@@ -61,7 +61,7 @@ add_executable("SimpleTreeTest"
 target_link_libraries("SimpleTreeTest" "SDL2")
 target_link_libraries("SimpleTreeTest" "SDL2main")
 target_link_libraries("SimpleTreeTest" "SDL2_ttf")
-target_link_libraries("SimpleTreeTest" "Tree.lib")
+target_link_libraries("SimpleTreeTest" "Tree")
 add_dependencies("SimpleTreeTest" "Tree")
 #----------------------------------------------------------------------------
 
@@ -77,7 +77,21 @@ add_executable("SimpleBSTTest"
 target_link_libraries("SimpleBSTTest" "SDL2")
 target_link_libraries("SimpleBSTTest" "SDL2main")
 target_link_libraries("SimpleBSTTest" "SDL2_ttf")
-target_link_libraries("SimpleBSTTest" "Tree.lib")
+target_link_libraries("SimpleBSTTest" "Tree")
 add_dependencies("SimpleBSTTest" "Tree")
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+set("BSTSORT_SOURCES"
+	"src/BSTSort/Main.cpp"
+)
+
+add_executable("BSTSort" 
+		${BSTSORT_SOURCES}
+)
+
+target_link_libraries("BSTSort" "Tree")
+add_dependencies("BSTSort" "Tree")
+
 #----------------------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 ﻿  Building Custom Rule E:/Game box/Projects/DataStructureAlgorithms/CMakeLists.txt
   CMake does not need to re-run because E:/Game box/Projects/DataStructureAlgorithms/build1/CMakeFiles/generate.stamp is up-to-date.
   Main.cpp
-  SimpleTreeTest.vcxproj -> E:\Game box\Projects\DataStructureAlgorithms\build1\\bin\Debug\SimpleTreeTest.exe
-  SimpleTreeTest.vcxproj -> E:/Game box/Projects/DataStructureAlgorithms/build1//bin/Debug/SimpleTreeTest.pdb (Full PDB)
+  BSTSort.vcxproj -> E:\Game box\Projects\DataStructureAlgorithms\build1\\bin\Debug\BSTSort.exe
+  BSTSort.vcxproj -> E:/Game box/Projects/DataStructureAlgorithms/build1//bin/Debug/BSTSort.pdb (Full PDB)
